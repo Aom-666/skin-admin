@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'; // ลบ useRef ออก
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import '../css/Dashboard.css';
 
 // --- ส่วนจัดการ Library ---
@@ -35,7 +35,16 @@ const Dashboard = () => {
     const [history, setHistory] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(5);
+    const navigate = useNavigate();
     
+    const handleLogout = (e) => {
+      e.preventDefault();
+
+      console.log("กำลังออกจากระบบ...");
+      localStorage.removeItem('auth_token');
+      navigate('/login');
+
+    }
     // --- ลบตัวแปร ref ที่ไม่ใช้ออกแล้ว ---
 
     // --- ข้อมูลตัวอย่างสำหรับทุกหน้า ---
@@ -80,7 +89,7 @@ const Dashboard = () => {
                     <NavLink to="/dashboard">ภาพรวม</NavLink>
                     <NavLink to="/products">จัดการสินค้า</NavLink>
                     <NavLink to="/feedback">ข้อเสนอแนะ</NavLink>
-                    <a href="#logout">ออกจากระบบ</a>
+                    <a href="#" onClick={handleLogout}>ออกจากระบบ</a>
                 </nav>
             </header>
 

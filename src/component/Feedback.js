@@ -1,7 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import '../css/UserFeedback.css'; // สร้างไฟล์ CSS ใหม่สำหรับ UserFeedback
 function Feedback(){
+  const navigate = useNavigate();
+    const handleLogout = (e) => {
+    e.preventDefault();
+
+    console.log("กำลังออกจากระบบ...");
+    localStorage.removeItem('auth_token');
+    navigate('/login');
+
+  }
      const [feedbackList, setFeedbackList] = useState([
     {
       id: 1,
@@ -123,7 +132,7 @@ function Feedback(){
           <NavLink to="/dashboard">ภาพรวม</NavLink>
           <NavLink to="/products">จัดการสินค้า</NavLink>
           <NavLink to="/feedback">ข้อเสนอแนะ</NavLink>
-          <a href="#logout">ออกจากระบบ</a>
+          <a href="#" onClick={handleLogout}>ออกจากระบบ</a>
         </nav>
       </header>
 

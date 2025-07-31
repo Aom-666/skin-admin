@@ -7,6 +7,16 @@ import '../css/ProductManagement.css'; // ตรวจสอบว่า import 
 function ProductManagement() {
   const navigate = useNavigate();
   const location = useLocation();
+
+  const handleLogout = (e) => {
+    e.preventDefault();
+
+    console.log("กำลังออกจากระบบ...");
+    localStorage.removeItem('auth_token');
+    navigate('/login');
+
+  }
+
   const [products, setProducts] = useState([
     // ตัวอย่างข้อมูลสินค้าที่มีอยู่เดิม (พร้อมเพิ่มข้อมูลใหม่สำหรับ AI)
     {
@@ -148,7 +158,7 @@ function ProductManagement() {
           <NavLink to="/dashboard">ภาพรวม</NavLink>
           <NavLink to="/products">จัดการสินค้า</NavLink>
           <NavLink to="/feedback">ข้อเสนอแนะ</NavLink>
-          <a href="#logout">ออกจากระบบ</a>
+          <a href="#" onClick={handleLogout}>ออกจากระบบ</a>
         </nav>
       </header>
 
