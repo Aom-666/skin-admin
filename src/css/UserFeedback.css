@@ -1,0 +1,297 @@
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap');
+
+body {
+    font-family: 'Kanit', sans-serif;
+    background-color: #f0f2f5;
+    margin: 0;
+    padding: 0;
+}
+
+.feedback-container {
+  padding: 30px;
+  background-color: #f0f2f5;
+  min-height: calc(100vh - 80px); /* Adjust based on your header height */
+  color: #333;
+}
+
+.feedback-header {
+  padding-bottom: 20px;
+  margin-bottom: 30px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.feedback-header h1 {
+  font-size: 2.8em;
+  color: #333;
+  font-weight: 600;
+  margin: 0;
+  text-align: center;
+}
+
+/* Controls (Search, Filters, Sort) */
+.feedback-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-bottom: 30px;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  align-items: center;
+  justify-content: space-between;
+}
+
+.search-input {
+  flex: 1 1 300px; /* Allow input to grow but has min-width */
+  padding: 12px 15px;
+  border: 1px solid #dcdcdc;
+  border-radius: 10px;
+  font-size: 1em;
+  color: #555;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.search-input::placeholder {
+  color: #aaa;
+}
+
+.search-input:focus {
+  border-color: #ff6f61;
+  box-shadow: 0 0 0 3px rgba(255, 111, 97, 0.2);
+}
+
+.filters-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  align-items: center;
+}
+
+.filters-group label {
+  font-size: 1em;
+  color: #666;
+  font-weight: 500;
+}
+
+.filter-select {
+  padding: 10px 15px;
+  border: 1px solid #dcdcdc;
+  border-radius: 10px;
+  font-size: 0.95em;
+  cursor: pointer;
+  background-color: #fff;
+  transition: all 0.2s ease-in-out;
+  appearance: none;
+  background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23666%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-6.5%200-12.3%203.4-15.6%208.5-3.3%205.1-3.2%2011.6.4%2016.5l133.9%20163.7c5.1%206.2%2014.2%206.2%2019.3%200L287.4%2085.9c3.6-4.9%203.7-11.4.4-16.5z%22%2F%3E%3C%2Fsvg%3E');
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 10px auto;
+}
+
+.filter-select:focus {
+  border-color: #ff6f61;
+  box-shadow: 0 0 0 3px rgba(255, 111, 97, 0.2);
+  outline: none;
+}
+
+
+/* Feedback List */
+.feedback-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); /* Responsive grid */
+  gap: 25px;
+}
+
+.feedback-card {
+  background-color: #fff;
+  border-radius: 15px;
+  padding: 25px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e0e0e0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.feedback-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+}
+
+.feedback-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9em;
+  color: #777;
+}
+
+.user-name {
+  font-weight: 600;
+  color: #444;
+  font-size: 1.1em;
+}
+
+.feedback-date {
+  font-style: italic;
+}
+
+.feedback-rating {
+  color: #f39c12; /* Star color (Orange) */
+  font-size: 1.3em;
+  margin-top: 5px;
+}
+
+.feedback-rating .star {
+  color: #ccc; /* Unfilled star color */
+  margin-right: 2px;
+}
+
+.feedback-rating .star.filled {
+  color: #f39c12; /* Filled star color */
+}
+
+
+.feedback-comment {
+  font-size: 1em;
+  color: #555;
+  line-height: 1.6;
+  margin-top: 10px;
+  margin-bottom: 15px;
+  flex-grow: 1; /* Allow comment to take up space */
+}
+
+.feedback-info {
+  display: flex;
+  gap: 10px;
+  font-size: 0.85em;
+  margin-top: auto; /* Push to bottom */
+}
+
+.feedback-type,
+.feedback-status {
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-weight: 500;
+  white-space: nowrap; /* Prevent wrapping */
+}
+
+/* Colors for Feedback Types */
+.คำชม {
+  background-color: #e6ffe6; /* Light Green */
+  color: #28a745; /* Dark Green */
+  border: 1px solid #28a745;
+}
+
+.ข้อเสนอแนะ {
+  background-color: #e0f2ff; /* Light Blue */
+  color: #007bff; /* Dark Blue */
+  border: 1px solid #007bff;
+}
+
+.ปัญหา-บั๊ก { /* Match type with class name */
+  background-color: #ffebe6; /* Light Red */
+  color: #dc3545; /* Dark Red */
+  border: 1px solid #dc3545;
+}
+
+/* Colors for Feedback Statuses */
+.ยังไม่ได้อ่าน {
+  background-color: #fff3cd; /* Light Yellow */
+  color: #ffc107; /* Dark Yellow */
+  border: 1px solid #ffc107;
+}
+
+.อ่านแล้ว {
+  background-color: #e9ecef; /* Light Gray */
+  color: #6c757d; /* Dark Gray */
+  border: 1px solid #6c757d;
+}
+
+.กำลังดำเนินการ {
+  background-color: #cfe2ff; /* Lighter Blue */
+  color: #0d6efd; /* Blue */
+  border: 1px solid #0d6efd;
+}
+
+.แก้ไขแล้ว {
+  background-color: #d1e7dd; /* Light Green */
+  color: #198754; /* Green */
+  border: 1px solid #198754;
+}
+
+.feedback-actions {
+    margin-top: 15px;
+}
+
+.action-select {
+    padding: 8px 12px;
+    border: 1px solid #dcdcdc;
+    border-radius: 8px;
+    font-size: 0.9em;
+    cursor: pointer;
+    background-color: #fff;
+    transition: all 0.2s ease-in-out;
+    appearance: none;
+    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23666%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-6.5%200-12.3%203.4-15.6%208.5-3.3%205.1-3.2%2011.6.4%2016.5l133.9%20163.7c5.1%206.2%2014.2%206.2%2019.3%200L287.4%2085.9c3.6-4.9%203.7-11.4.4-16.5z%22%2F%3E%3C%2Fsvg%3E');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 9px auto;
+}
+
+.action-select:focus {
+    border-color: #ff6f61;
+    box-shadow: 0 0 0 3px rgba(255, 111, 97, 0.2);
+    outline: none;
+}
+
+.no-feedback {
+  text-align: center;
+  color: #666;
+  font-size: 1.2em;
+  margin-top: 50px;
+  grid-column: 1 / -1; /* Center across the grid */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .feedback-container {
+    padding: 20px 15px;
+  }
+  .feedback-header h1 {
+    font-size: 2em;
+    text-align: left;
+  }
+  .feedback-controls {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 15px;
+    padding: 15px;
+  }
+  .search-input {
+    width: 100%;
+    flex: none;
+  }
+  .filters-group {
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    gap: 10px;
+  }
+  .filters-group label {
+      width: 100%;
+      text-align: left;
+  }
+  .filter-select {
+    width: 100%;
+  }
+  .feedback-list {
+    grid-template-columns: 1fr; /* Single column on small screens */
+  }
+  .feedback-card {
+      padding: 20px;
+  }
+}

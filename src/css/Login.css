@@ -1,0 +1,98 @@
+/* src/css/Login.css */
+
+/* ตั้งค่าพื้นฐานสำหรับ body และการจัดวางหน้าจอโดยรวม */
+body {
+  margin: 0; /* ลบ margin เริ่มต้นของ browser */
+  font-family: Arial, sans-serif; /* ตั้งค่าฟอนต์ */
+  background-color: #fce4ec; /* สีชมพูอ่อน ตามภาพที่คุณให้มา */
+  display: flex;
+  justify-content: center; /* จัดกึ่งกลางแนวนอน */
+  align-items: center; /* จัดกึ่งกลางแนวตั้ง */
+  min-height: 100vh; /* ทำให้ body สูงเต็ม viewport */
+  width: 100%;
+}
+
+/* Container หลักของหน้า Login */
+.login-page-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box; /* เพื่อให้ padding ไม่เพิ่มขนาดรวม */
+}
+
+/* กล่อง Login Card สีขาว */
+.login-card {
+  background-color: #fff;
+  padding: 40px 50px;
+  border-radius: 15px; /* มุมโค้งมน */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* เงา */
+  text-align: center;
+  width: 100%;
+  max-width: 450px; /* กำหนดความกว้างสูงสุด */
+}
+
+/* หัวข้อ "Who Are You ?" */
+.login-title {
+  font-size: 2.2em;
+  color: #333;
+  margin-bottom: 40px;
+}
+
+/* กลุ่ม Form Input (Label + Input) */
+.login-form .form-group {
+  margin-bottom: 25px;
+  text-align: left;
+}
+
+/* Label ของ Input */
+.login-form label {
+  display: block; /* ทำให้ label ขึ้นบรรทัดใหม่ */
+  font-size: 1.1em;
+  color: #555;
+  margin-bottom: 8px;
+}
+
+/* ช่อง Input */
+.login-input {
+  width: calc(100% - 24px); /* 100% ลบ padding ซ้ายขวา */
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 1.1em;
+  outline: none; /* ลบเส้นขอบสีฟ้าเมื่อ focus */
+}
+
+/* สไตล์เมื่อ Input ถูก focus */
+.login-input:focus {
+  border-color: #ff99cc; /* เปลี่ยนสีเส้นขอบเป็นชมพู */
+  box-shadow: 0 0 0 3px rgba(255, 153, 204, 0.3); /* เพิ่มเงาอ่อนๆ */
+}
+
+/* ปุ่ม "เข้าสู่ระบบ" */
+.login-button {
+  background-color: #ff99cc; /* สีชมพู */
+  color: white;
+  padding: 15px 30px;
+  border: none;
+  border-radius: 10px;
+  font-size: 1.2em;
+  font-weight: bold;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 30px;
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Transition สำหรับ hover/active */
+}
+
+/* สไตล์เมื่อเมาส์ชี้ที่ปุ่ม */
+.login-button:hover {
+  background-color: #ff66b2; /* สีชมพูเข้มขึ้น */
+  transform: translateY(-2px); /* ปุ่มลอยขึ้นเล็กน้อย */
+}
+
+/* สไตล์เมื่อปุ่มถูกกด */
+.login-button:active {
+  background-color: #e65c9f; /* สีเข้มขึ้นอีก */
+  transform: translateY(0);
+}

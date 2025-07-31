@@ -1,0 +1,490 @@
+/* src/css/ProductManagement.css */
+
+/* --- Global / Layout Styles --- */
+* {
+  box-sizing: border-box;
+}
+
+html, body { /* <<-- เพิ่ม html เข้ามาด้วย และตั้งค่าใหม่ */
+  margin: 0 !important; /* <<-- เพิ่ม !important */
+  padding: 0 !important; /* <<-- เพิ่ม !important */
+  font-family: Arial, sans-serif;
+  background-color: #fff;
+  width: 100vw !important; /* <<-- เพิ่ม !important */
+  overflow-x: hidden !important; /* <<-- เพิ่ม !important */
+}
+
+.admin-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100vw !important; /* <<-- เปลี่ยนเป็น 100vw และเพิ่ม !important */
+  margin: 0 !important; /* <<-- เพิ่ม !important */
+  padding: 0 !important; /* <<-- เพิ่ม !important */
+}
+
+/* --- Header Styles --- */
+.admin-header {
+  background-color: #ff99cc;
+  color: white;
+  padding: 20px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 100vw !important; /* <<-- เปลี่ยนเป็น 100vw และเพิ่ม !important */
+  margin: 0 !important; /* <<-- เพิ่ม !important เพื่อให้ไม่มี margin รอบๆ */
+  /* ตรวจสอบให้แน่ใจว่าไม่มี max-width หรือ margin: auto ที่นี่ */
+}
+
+.admin-header h1 {
+  margin: 0;
+  font-size: 1.8em;
+}
+
+.admin-nav a {
+  color: white;
+  text-decoration: none;
+  margin-left: 25px;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.admin-nav a:hover,
+.admin-nav a.active {
+  color: #ffe0f0;
+}
+
+/* --- Main Content Styles --- */
+.admin-main {
+  flex-grow: 1;
+  padding: 30px;
+  background-color: #fff;
+  border-radius: 0;
+  box-shadow: none;
+  width: 100vw !important; /* <<-- เปลี่ยนเป็น 100vw และเพิ่ม !important */
+  margin: 0 !important; /* <<-- เพิ่ม !important */
+  /* ยืนยันว่าไม่มี max-width และ margin: auto แล้ว */
+}
+
+.product-management-section h2 {
+  font-size: 1.8em;
+  color: #333;
+  margin-bottom: 25px;
+  border-bottom: 2px solid #f0f0f0;
+  padding-bottom: 15px;
+}
+
+/* --- Action Bar (Add Button, Search Input) --- */
+.action-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.add-button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1em;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.add-button:hover {
+  background-color: #45a049;
+}
+
+.search-input {
+  padding: 10px 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  width: 300px;
+  font-size: 1em;
+  max-width: 100%;
+}
+
+/* --- Product Table Styles --- */
+.product-table-container {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+table th,
+table td {
+  border: 1px solid #eee;
+  padding: 12px 15px;
+  text-align: left;
+}
+
+table th {
+  background-color: #f8f8f8;
+  font-weight: bold;
+  color: #555;
+}
+
+table tr:nth-child(even) {
+  background-color: #fdfdfd;
+}
+
+table tr:hover {
+  background-color: #f5f5f5;
+}
+
+.product-thumbnail {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.actions button {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.9em;
+  margin-right: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.edit-button {
+  background-color: #2196F3;
+  color: white;
+}
+
+.edit-button:hover {
+  background-color: #0b7dda;
+}
+
+.delete-button {
+  background-color: #f44336;
+  color: white;
+}
+
+.delete-button:hover {
+  background-color: #da190b;
+}
+
+/* --- Modal Styles (สำหรับ ProductForm) --- */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 10px;
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  width: 90%;
+  max-width: 500px;
+  animation: slideIn 0.3s ease-out;
+  overflow-y: auto;
+  max-height: 90vh;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.modal-content h3 {
+  margin-top: 0;
+  margin-bottom: 25px;
+  color: #333;
+  font-size: 1.5em;
+  text-align: center;
+}
+
+/* Form ใน Modal */
+.modal-content .form-group {
+  margin-bottom: 18px;
+}
+
+.modal-content label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #444;
+}
+
+.modal-content input[type="text"],
+.modal-content input[type="number"],
+.modal-content textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 1em;
+  transition: border-color 0.2s ease;
+}
+
+.modal-content input[type="text"]:focus,
+.modal-content input[type="number"]:focus,
+.modal-content textarea:focus {
+  border-color: #ff99cc;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(255, 153, 204, 0.2);
+}
+
+.modal-content textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.modal-content .image-preview {
+  display: block;
+  margin-top: 10px;
+  max-width: 100px;
+  height: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.form-actions {
+  margin-top: 30px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.form-actions button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  font-size: 1.05em;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.form-actions .save-button {
+  background-color: #ff99cc;
+  color: white;
+}
+
+.form-actions .save-button:hover {
+  background-color: #ff66b2;
+}
+
+.form-actions .cancel-button {
+  background-color: #ccc;
+  color: #333;
+}
+
+.form-actions .cancel-button:hover {
+  background-color: #bbb;
+}
+
+/* --- Media Queries for Smaller Screens --- */
+@media (max-width: 768px) {
+  .admin-header {
+    flex-direction: column;
+    padding: 15px 20px;
+    text-align: center;
+  }
+
+  .admin-header h1 {
+    margin-bottom: 10px;
+  }
+
+  .admin-nav a {
+    margin: 0 10px;
+    font-size: 0.9em;
+  }
+
+  .admin-main {
+    padding: 15px;
+  }
+
+  .action-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .add-button, .search-input {
+    width: 100%;
+    margin-bottom: 15px;
+  }
+
+  table {
+    font-size: 0.9em;
+  }
+
+  table th, table td {
+    padding: 8px 10px;
+  }
+
+  .product-thumbnail {
+    width: 40px;
+    height: 40px;
+  }
+
+  .actions button {
+    padding: 6px 8px;
+    font-size: 0.8em;
+  }
+
+  /* ปรับ Modal สำหรับหน้าจอเล็ก */
+  .modal-overlay {
+    padding: 5px;
+  }
+
+  .modal-content {
+    width: 100%;
+    padding: 20px 15px;
+    max-width: 400px;
+  }
+
+  .modal-content h3 {
+    font-size: 1.3em;
+  }
+
+  .modal-content input[type="text"],
+  .modal-content input[type="number"],
+  .modal-content textarea {
+    padding: 10px;
+  }
+
+  .form-actions {
+    text-align: center;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .form-actions button {
+    width: 100%;
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  /* ปรับแต่งเพิ่มเติมสำหรับหน้าจอที่เล็กมากๆ */
+  .modal-content {
+    padding: 15px 10px;
+  }
+  .modal-content h3 {
+    font-size: 1.2em;
+  }
+  .form-actions button {
+    font-size: 1em;
+    padding: 8px 15px;
+  }
+}
+/* เพิ่มสไตล์สำหรับ Select (ถ้ายังไม่มี) */
+.modal-content select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 1em;
+  transition: border-color 0.2s ease;
+  appearance: none; /* ลบ default arrow ของ select บนบาง browser */
+  background-color: #fff;
+  /* เพิ่ม icon ลูกศรสำหรับ select ถ้าต้องการให้สวยงาม */
+  background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23000%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-6.5%200-12.3%203.4-15.6%208.5-3.3%205.1-3.2%2011.6.4%2016.5l133.9%20163.7c5.1%206.2%2014.2%206.2%2019.3%200L287.4%2085.9c3.6-4.9%203.7-11.4.4-16.5z%22%2F%3E%3C%2Fsvg%3E');
+  background-repeat: no-repeat;
+  background-position: right 12px top 50%;
+  background-size: 10px auto;
+}
+
+.modal-content select:focus {
+  border-color: #ff99cc;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(255, 153, 204, 0.2);
+}
+
+/* เพิ่มระยะห่างสำหรับ checkbox label */
+/* สไตล์สำหรับกลุ่ม checkbox */
+.checkbox-group {
+  display: flex;
+  flex-direction: column; /* จัดเรียง checkbox เป็นแนวตั้ง */
+  gap: 10px; /* ระยะห่างระหว่างแต่ละ checkbox */
+  margin-top: 5px; /* ระยะห่างจากหัวข้อ label ด้านบน */
+}
+
+.checkbox-item {
+  display: flex; /* ทำให้ checkbox และ label อยู่ในบรรทัดเดียวกัน */
+  align-items: center; /* จัดให้ checkbox และ text อยู่กึ่งกลางแนวตั้ง */
+}
+
+.checkbox-item input[type="checkbox"] {
+  margin-right: 8px; /* ระยะห่างระหว่าง checkbox กับข้อความ */
+  transform: scale(1.2); /* ทำให้ checkbox ใหญ่ขึ้นเล็กน้อย (ปรับตามต้องการ) */
+  cursor: pointer;
+}
+
+.checkbox-item label {
+  margin-bottom: 0; /* ลบ margin-bottom เดิมของ label ใน form-group */
+  font-weight: normal; /* ทำให้ข้อความ label ไม่ใช่ตัวหนาเหมือน label อื่นๆ */
+  color: #333;
+  cursor: pointer;
+}
+.form-group label {
+    margin-right: 10px; /* เพื่อให้ label ของ checkbox ไม่ติดกัน */
+}
+
+/* ปรับความกว้างของคอลัมน์ในตาราง (ถ้าข้อมูลยาวเกินไป) */
+/* คุณอาจต้องปรับ width ของแต่ละ th ตามความเหมาะสม */
+table th, table td {
+  /* min-width: 100px; */ /* ตัวอย่าง: กำหนดความกว้างขั้นต่ำ */
+  white-space: nowrap; /* ป้องกันข้อความขึ้นบรรทัดใหม่ */
+  overflow: hidden; /* ซ่อนข้อความที่ล้น */
+  text-overflow: ellipsis; /* แสดง ... เมื่อข้อความล้น */
+}
+
+/* ตัวอย่างการปรับเฉพาะบางคอลัมน์ */
+table th:nth-child(2), /* ชื่อสินค้า */
+table td:nth-child(2) {
+  min-width: 180px;
+}
+table th:nth-child(4), /* ประเภท */
+table td:nth-child(4) {
+  min-width: 100px;
+}
+table th:nth-child(5), /* หมวดหมู่ย่อย */
+table td:nth-child(5) {
+  min-width: 120px;
+}
+table th:nth-child(6), /* โทนสีหลัก */
+table td:nth-child(6) {
+  min-width: 100px;
+}
+table th:nth-child(7), /* เฉดสี */
+table td:nth-child(7) {
+  min-width: 150px;
+}
+table th:nth-child(8), /* ฟินิช */
+table td:nth-child(8) {
+  min-width: 100px;
+}
+table th:nth-child(9), /* สไตล์ที่แนะนำ */
+table td:nth-child(9) {
+  min-width: 200px;
+}

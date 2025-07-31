@@ -1,0 +1,265 @@
+/* --- Fonts and Basic Setup --- */
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600;700&display=swap');
+
+body {
+    margin: 0;
+    font-family: 'Kanit', sans-serif;
+    background-color: #f8f9fa;
+    color: #212529;
+}
+
+.cosmetic-dashboard {
+    display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100vw !important; /* <<-- เปลี่ยนเป็น 100vw และเพิ่ม !important */
+  margin: 0 !important; /* <<-- เพิ่ม !important */
+  padding: 0 !important;
+}
+
+/* === Header Section (จากดีไซน์ Cosmetic) === */
+.main-header {
+    background-color: #ff99cc; /* เปลี่ยนสีชมพู */
+    color: white;
+    padding: 20px 30px; /* ปรับ Padding */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+    margin: 0;
+    font-size: 1.8em; /* ปรับขนาดฟอนต์ */
+    font-weight: 700;
+}
+
+.main-nav a {
+    color: white;
+    text-decoration: none;
+    margin-left: 25px; /* ปรับระยะห่าง */
+    font-weight: bold; /* ทำให้เป็นตัวหนา */
+    transition: color 0.3s ease;
+}
+
+.main-nav a:hover,
+.main-nav a.active { /* เพิ่ม .active สำหรับ NavLink */
+    color: #ffe0f0; /* สีตอน hover/active */
+}
+
+/* === Main Content Layout --- */
+.main-content {
+    padding: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.content-title {
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: #343a40;
+    margin-bottom: 0; /* Adjusted */
+}
+
+/* === Stats Overview Section (จากดีไซน์ Cosmetic) === */
+.stats-overview-section {
+    padding: 1.5rem;
+    border-radius: 12px;
+    background-color: #ffffff;
+    border: 1px solid #e9ecef;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+.stats-overview-section .content-title {
+    margin-bottom: 1.5rem; /* Add margin only inside this section */
+}
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+.stat-card {
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    border: 1px solid #e9ecef;
+}
+.card-icon { width: 60px; height: 60px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.75rem; }
+.card-info { display: flex; flex-direction: column; }
+.card-label { font-size: 1rem; font-weight: 500; color: #6c757d; }
+.card-value { font-size: 2.25rem; font-weight: 700; margin-top: 0.25rem; }
+
+
+/* === Analytics Grid Section (จากดีไซน์ Analytics) === */
+.analytics-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 columns layout */
+    gap: 2rem;
+}
+
+.card {
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 1.5rem;
+    border: 1px solid #e9ecef;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+.card-header { border-bottom: 1px solid #f0f0f0; padding-bottom: 1rem; margin-bottom: 1rem; }
+.card-header h2 { font-size: 1.25rem; margin: 0; display: flex; align-items: center; gap: 0.75rem; }
+
+/* === Analytics Grid Section (ปรับปรุงใหม่) === */
+
+/* --- Grid Layout --- */
+.face-comparison-card, .doughnut-chart-card { grid-column: span 1; }
+.line-chart-card, .recent-activity-card { grid-column: span 2; }
+
+/* --- Face Comparison Card Styling (แก้ไขใหม่ทั้งหมด) --- */
+.comparison-body {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* จัดให้ชิดซ้าย-ขวาและกลาง */
+    gap: 1rem; /* เพิ่มระยะห่าง */
+    padding: 1rem 1.5rem; /* เพิ่มระยะห่างภายใน */
+    margin-top: 1rem;
+    background-color: #f8f9fa; /* เพิ่มสีพื้นหลังอ่อนๆ */
+    border-radius: 8px;
+}
+
+.face-box {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem; /* ระยะห่างระหว่างรูปกับข้อความ */
+}
+
+.face-box img {
+    width: 80px; /* ปรับขนาดรูปภาพ */
+    height: 80px;
+    border-radius: 50%; /* ทำให้รูปเป็นวงกลม */
+    object-fit: cover; /* ทำให้รูปเต็มวงกลม */
+    border: 3px solid #dee2e6; /* เพิ่มขอบให้รูป */
+}
+
+.face-box label {
+    font-weight: 500;
+    color: #6c757d;
+    font-size: 0.9em;
+}
+
+.match-score {
+    text-align: center;
+}
+
+.match-score span {
+    font-size: 2.25rem; /* ปรับขนาดตัวเลข */
+    font-weight: 700;
+    color: #198754; /* สีเขียวสำหรับคะแนนสูง */
+    display: block;
+}
+
+.match-score p {
+    margin-top: -5px;
+    font-size: 0.9em;
+    font-weight: 500;
+    color: #6c757d;
+}
+
+/* --- ส่วนอื่นๆ ที่เหลือ --- */
+.chart-container { height: 300px; }
+
+/* Responsive Adjustments (เพิ่มการปรับปรุง) */
+@media (max-width: 500px) {
+    .comparison-body {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+}
+.chart-container { height: 300px; }
+
+/* Responsive Adjustments */
+@media (max-width: 992px) {
+    .analytics-grid { grid-template-columns: 1fr; } /* Stack analytics cards on medium screens */
+    .face-comparison-card, .doughnut-chart-card, .line-chart-card, .recent-activity-card { grid-column: span 1; }
+}
+
+@media (max-width: 768px) {
+    .main-header { flex-direction: column; gap: 1rem; }
+    .main-content { padding: 1rem; }
+}
+
+/* === Recent Activity Table Styling === */
+
+.recent-activity-card {
+    padding: 0; /* เอา padding ของการ์ดหลักออก เพื่อให้ตารางชิดขอบ */
+}
+
+.recent-activity-card .card-header {
+    padding: 1.5rem; /* ย้าย padding มาไว้ที่ header แทน */
+    margin-bottom: 0;
+}
+
+.activity-table-wrapper {
+    width: 100%;
+    overflow-x: auto; /* ทำให้ตารางสามารถ scroll แนวนอนได้บนจอเล็ก */
+    /* ✨ เพิ่ม 2 บรรทัดนี้เข้าไป ✨ */
+    max-height: 450px; /* กำหนดความสูงสูงสุดของตาราง */
+    overflow-y: auto; /* ถ้าข้อมูลยาวเกิน ให้มี scrollbar แนวตั้ง */
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse; /* ทำให้เส้นขอบตารางรวมเป็นเส้นเดียว */
+}
+
+table th,
+table td {
+    padding: 1rem 1.5rem; /* ระยะห่างภายในช่อง */
+    text-align: left;
+    border-top: 1px solid #f0f0f0; /* เส้นคั่นระหว่างแถว */
+    white-space: nowrap; /* ป้องกันข้อความยาวๆ ขึ้นบรรทัดใหม่ */
+}
+
+table th {
+    font-weight: 600;
+    font-size: 0.9em;
+    color: #6c757d;
+}
+
+table tbody tr:hover {
+    background-color: #f8f9fa; /* สีพื้นหลังตอนเอาเมาส์ชี้ */
+}
+
+/* --- สไตล์สำหรับ "ป้ายสถานะ" (Status Pill) --- */
+.status-pill {
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.85em;
+    text-align: center;
+}
+
+.status-pill.matched { /* สีเขียว: สำเร็จ */
+    background-color: #e8f3ee;
+    color: #198754;
+}
+
+.status-pill.mismatched { /* สีแดง: ไม่สำเร็จ */
+    background-color: #faebee;
+    color: #dc3545;
+}
+
+.status-pill.edited { /* สีฟ้า: แก้ไข */
+    background-color: #e7f1ff;
+    color: #0d6efd;
+}
+
+.status-pill.added { /* สีเหลือง: เพิ่มใหม่ */
+    background-color: #fff8e7;
+    color: #ffc107;
+}
