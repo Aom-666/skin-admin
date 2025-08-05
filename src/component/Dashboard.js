@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'; // ลบ useRef ออก
+import React, { useState, useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import '../css/Dashboard.css';
 
@@ -37,17 +37,24 @@ const Dashboard = () => {
     const [totalPages, setTotalPages] = useState(5);
     const navigate = useNavigate();
     
+    // ✨ 1. สร้าง State ใหม่สำหรับเก็บข้อมูลกราฟวงกลม
+    const [doughnutChartData, setDoughnutChartData] = useState({
+        labels: [],
+        datasets: [{
+            data: [],
+            backgroundColor: ['#f1c40f', '#e67e22', '#d35400', '#f39c12', '#bdc3c7'],
+            borderColor: '#ffffff',
+            borderWidth: 4,
+        }],
+    });
+
     const handleLogout = (e) => {
       e.preventDefault();
-
       console.log("กำลังออกจากระบบ...");
       localStorage.removeItem('auth_token');
       navigate('/login');
-
     }
-    // --- ลบตัวแปร ref ที่ไม่ใช้ออกแล้ว ---
 
-    // --- ข้อมูลตัวอย่างสำหรับทุกหน้า ---
     const dummyHistoryData = {
         1: [
             { id: 1, time: '10:55 น.', activity: 'เปรียบเทียบใบหน้า (User-108)', status: 'matched', operator: 'Admin' },
@@ -62,10 +69,34 @@ const Dashboard = () => {
         ],
     };
 
-    // --- แก้ไข useEffect ให้เหลือแค่การตั้งค่าข้อมูล ---
     useEffect(() => {
         setHistory(dummyHistoryData[currentPage] || []);
     }, [currentPage]);
+
+    // ✨ 2. เพิ่ม useEffect ใหม่สำหรับดึงข้อมูลกราฟโดยเฉพาะ
+    useEffect(() => {
+        const fetchSkinToneData = async () => {
+            try {
+                const response = await fetch('http://localhost:5000/api/skintone-summary');
+                const data = await response.json();
+
+                const labels = data.map(item => item.SkinTone);
+                const counts = data.map(item => item.count);
+
+                setDoughnutChartData({
+                    labels: labels,
+                    datasets: [{
+                        ...doughnutChartData.datasets[0],
+                        data: counts,
+                    }],
+                });
+            } catch (error) {
+                console.error("เกิดข้อผิดพลาดในการดึงข้อมูลสัดส่วนโทนสีผิว:", error);
+            }
+        };
+
+        fetchSkinToneData();
+    }, []); // `[]` ทำให้ทำงานแค่ครั้งเดียวตอนโหลดหน้า
 
     // Data for Charts (ข้อมูลกราฟยังคงเดิม)
     const lineChartData = {
@@ -75,10 +106,7 @@ const Dashboard = () => {
             { label: 'Natural Beige', data: [80, 90, 110, 100, 130, 150, 140], borderColor: '#2ecc71', backgroundColor: 'rgba(46, 204, 113, 0.1)', fill: true, tension: 0.4 },
         ],
     };
-    const doughnutChartData = {
-        labels: ['Warm Ivory', 'Natural Beige', 'Golden Tan', 'Cool Porcelain', 'Other'],
-        datasets: [{ data: [45, 25, 15, 10, 5], backgroundColor: ['#f1c40f', '#e67e22', '#d35400', '#f39c12', '#bdc3c7'], borderColor: '#ffffff', borderWidth: 4 }],
-    };
+
     const chartOptions = { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { usePointStyle: true } } } };
 
     return (
@@ -118,6 +146,7 @@ const Dashboard = () => {
 
                     <section className="card doughnut-chart-card">
                         <div className="card-header"><h2><FontAwesomeIcon icon={faChartPie} /> สัดส่วนโทนสีผิว</h2></div>
+                        {/* ✨ 3. แก้ไข `data` ให้ใช้ State ที่เราสร้างขึ้นมา */}
                         <div className="chart-container"><Doughnut data={doughnutChartData} options={{ ...chartOptions, plugins: { legend: { position: 'right' } } }} /></div>
                     </section>
 
@@ -126,7 +155,6 @@ const Dashboard = () => {
                         <div className="chart-container"><Line data={lineChartData} options={chartOptions} /></div>
                     </section>
 
-                    {/* --- เอา ref ออกจาก section นี้แล้ว --- */}
                     <section className="card recent-activity-card">
                         <div className="card-header"><h2><FontAwesomeIcon icon={faHistory} /> กิจกรรมล่าสุด</h2></div>
                         <div className="activity-table-wrapper">
