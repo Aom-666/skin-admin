@@ -28,270 +28,147 @@ body {
   text-align: center;
 }
 
-/* Controls (Search, Filters, Sort) */
+/* --- Controls Bar --- */
 .feedback-controls {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  margin-bottom: 30px;
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 15px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-  align-items: center;
-  justify-content: space-between;
+    background-color: #fff;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e9ecef;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
 }
 
 .search-input {
-  flex: 1 1 300px; /* Allow input to grow but has min-width */
-  padding: 12px 15px;
-  border: 1px solid #dcdcdc;
-  border-radius: 10px;
-  font-size: 1em;
-  color: #555;
-  outline: none;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    flex-grow: 1;
+    padding: 0.75rem 1rem;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: 'Kanit', sans-serif;
+    min-width: 250px;
 }
-
-.search-input::placeholder {
-  color: #aaa;
-}
-
 .search-input:focus {
-  border-color: #ff6f61;
-  box-shadow: 0 0 0 3px rgba(255, 111, 97, 0.2);
+    outline: none;
+    border-color: #ffb6c1;
+    box-shadow: 0 0 0 3px rgba(255, 182, 193, 0.3);
 }
 
 .filters-group {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 15px;
-  align-items: center;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
 }
 
 .filters-group label {
-  font-size: 1em;
-  color: #666;
-  font-weight: 500;
+    font-weight: 500;
+    color: #495057;
 }
 
 .filter-select {
-  padding: 10px 15px;
-  border: 1px solid #dcdcdc;
-  border-radius: 10px;
-  font-size: 0.95em;
-  cursor: pointer;
-  background-color: #fff;
-  transition: all 0.2s ease-in-out;
-  appearance: none;
-  background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23666%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-6.5%200-12.3%203.4-15.6%208.5-3.3%205.1-3.2%2011.6.4%2016.5l133.9%20163.7c5.1%206.2%2014.2%206.2%2019.3%200L287.4%2085.9c3.6-4.9%203.7-11.4.4-16.5z%22%2F%3E%3C%2Fsvg%3E');
-  background-repeat: no-repeat;
-  background-position: right 12px center;
-  background-size: 10px auto;
+    padding: 0.6rem 2rem 0.6rem 1rem;
+    border-radius: 8px;
+    border: 1px solid #dee2e6;
+    font-family: 'Kanit', sans-serif;
+    background-color: #fff;
+    appearance: none;
+    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20320%20512%22%3E%3Cpath%20fill%3D%22%236c757d%22%20d%3D%22M137.4%20374.6c12.5%2012.5%2032.8%2012.5%2045.3%200l128-128c12.5-12.5%2012.5-32.8%200-45.3s-32.8-12.5-45.3%200L160%20289.4%2054.6%20184c-12.5-12.5-32.8-12.5-45.3%200s-12.5%2032.8%200%2045.3l128%20128z%22%2F%3E%3C%2Fsvg%3E');
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 0.8em;
 }
 
-.filter-select:focus {
-  border-color: #ff6f61;
-  box-shadow: 0 0 0 3px rgba(255, 111, 97, 0.2);
-  outline: none;
-}
-
-
-/* Feedback List */
+/* --- Feedback List --- */
 .feedback-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); /* Responsive grid */
-  gap: 25px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 1.5rem;
 }
 
 .feedback-card {
-  background-color: #fff;
-  border-radius: 15px;
-  padding: 25px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-  border: 1px solid #e0e0e0;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.feedback-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    border: 1px solid #e9ecef;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
 }
 
 .feedback-meta {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 0.9em;
-  color: #777;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9em;
+    color: #6c757d;
 }
 
 .user-name {
-  font-weight: 600;
-  color: #444;
-  font-size: 1.1em;
+    font-weight: 600;
+    color: #343a40;
 }
 
-.feedback-date {
-  font-style: italic;
-}
-
-.feedback-rating {
-  color: #f39c12; /* Star color (Orange) */
-  font-size: 1.3em;
-  margin-top: 5px;
-}
-
-.feedback-rating .star {
-  color: #ccc; /* Unfilled star color */
-  margin-right: 2px;
-}
-
-.feedback-rating .star.filled {
-  color: #f39c12; /* Filled star color */
-}
-
+.feedback-rating { font-size: 1.1rem; }
+.feedback-rating .star { color: #ced4da; }
+.feedback-rating .star.filled { color: #ffc107; }
 
 .feedback-comment {
-  font-size: 1em;
-  color: #555;
-  line-height: 1.6;
-  margin-top: 10px;
-  margin-bottom: 15px;
-  flex-grow: 1; /* Allow comment to take up space */
+    color: #212529;
+    line-height: 1.6;
+    margin: 0.5rem 0;
+    flex-grow: 1; /* ดันส่วน actions ลงไปข้างล่าง */
 }
 
 .feedback-info {
-  display: flex;
-  gap: 10px;
-  font-size: 0.85em;
-  margin-top: auto; /* Push to bottom */
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
 }
 
-.feedback-type,
-.feedback-status {
-  padding: 6px 10px;
-  border-radius: 8px;
-  font-weight: 500;
-  white-space: nowrap; /* Prevent wrapping */
+/* Base style for pills */
+.feedback-type, .feedback-status {
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.8em;
+    font-weight: 600;
 }
 
-/* Colors for Feedback Types */
-.คำชม {
-  background-color: #e6ffe6; /* Light Green */
-  color: #28a745; /* Dark Green */
-  border: 1px solid #28a745;
-}
+/* Status Colors */
+.status-ยังไม่ได้อ่าน { background-color: #FEF3C7; color: #92400E; }
+.status-อ่านแล้ว { background-color: #E5E7EB; color: #374151; }
+.status-กำลังดำเนินการ { background-color: #DBEAFE; color: #1D4ED8; }
+.status-แก้ไขแล้ว { background-color: #D1FAE5; color: #065F46; }
 
-.ข้อเสนอแนะ {
-  background-color: #e0f2ff; /* Light Blue */
-  color: #007bff; /* Dark Blue */
-  border: 1px solid #007bff;
-}
+/* Type Colors (ถ้ามี) */
+.type-คำชม { background-color: #D1FAE5; color: #065F46; }
+.type-ข้อเสนอแนะ { background-color: #DBEAFE; color: #1D4ED8; }
+.type-ปัญหา-บั๊ก { background-color: #FEE2E2; color: #991B1B; }
 
-.ปัญหา-บั๊ก { /* Match type with class name */
-  background-color: #ffebe6; /* Light Red */
-  color: #dc3545; /* Dark Red */
-  border: 1px solid #dc3545;
-}
 
-/* Colors for Feedback Statuses */
-.ยังไม่ได้อ่าน {
-  background-color: #fff3cd; /* Light Yellow */
-  color: #ffc107; /* Dark Yellow */
-  border: 1px solid #ffc107;
-}
-
-.อ่านแล้ว {
-  background-color: #e9ecef; /* Light Gray */
-  color: #6c757d; /* Dark Gray */
-  border: 1px solid #6c757d;
-}
-
-.กำลังดำเนินการ {
-  background-color: #cfe2ff; /* Lighter Blue */
-  color: #0d6efd; /* Blue */
-  border: 1px solid #0d6efd;
-}
-
-.แก้ไขแล้ว {
-  background-color: #d1e7dd; /* Light Green */
-  color: #198754; /* Green */
-  border: 1px solid #198754;
-}
-
-.feedback-actions {
-    margin-top: 15px;
-}
-
-.action-select {
-    padding: 8px 12px;
-    border: 1px solid #dcdcdc;
+.feedback-actions .action-select {
+    padding: 0.5rem 0.8rem;
     border-radius: 8px;
-    font-size: 0.9em;
-    cursor: pointer;
-    background-color: #fff;
-    transition: all 0.2s ease-in-out;
-    appearance: none;
-    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23666%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-6.5%200-12.3%203.4-15.6%208.5-3.3%205.1-3.2%2011.6.4%2016.5l133.9%20163.7c5.1%206.2%2014.2%206.2%2019.3%200L287.4%2085.9c3.6-4.9%203.7-11.4.4-16.5z%22%2F%3E%3C%2Fsvg%3E');
-    background-repeat: no-repeat;
-    background-position: right 10px center;
-    background-size: 9px auto;
-}
-
-.action-select:focus {
-    border-color: #ff6f61;
-    box-shadow: 0 0 0 3px rgba(255, 111, 97, 0.2);
-    outline: none;
+    border: 1px solid #dee2e6;
+    width: 100%;
+    margin-top: 0.5rem;
+    font-family: 'Kanit', sans-serif;
 }
 
 .no-feedback {
-  text-align: center;
-  color: #666;
-  font-size: 1.2em;
-  margin-top: 50px;
-  grid-column: 1 / -1; /* Center across the grid */
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 3rem;
+    color: #6c757d;
 }
 
-/* Responsive adjustments */
+/* --- Responsive for mobile --- */
 @media (max-width: 768px) {
-  .feedback-container {
-    padding: 20px 15px;
-  }
-  .feedback-header h1 {
-    font-size: 2em;
-    text-align: left;
-  }
-  .feedback-controls {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 15px;
-    padding: 15px;
-  }
-  .search-input {
-    width: 100%;
-    flex: none;
-  }
-  .filters-group {
-    flex-direction: column;
-    align-items: stretch;
-    width: 100%;
-    gap: 10px;
-  }
-  .filters-group label {
-      width: 100%;
-      text-align: left;
-  }
-  .filter-select {
-    width: 100%;
-  }
-  .feedback-list {
-    grid-template-columns: 1fr; /* Single column on small screens */
-  }
-  .feedback-card {
-      padding: 20px;
-  }
+    .admin-main { padding: 1.5rem 1rem; }
+    .feedback-controls { flex-direction: column; align-items: stretch; }
 }

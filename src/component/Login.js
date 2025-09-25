@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'; // ✨ 1. Import useNavigate
 import '../css/Login.css';
 
@@ -7,6 +7,16 @@ function Login() {
     const [password, setPassword] = useState('');
     const [error, setError] = useState(''); // ✨ 2. เพิ่ม State สำหรับเก็บ Error
     const navigate = useNavigate(); // ✨ 3. เรียกใช้ useNavigate
+
+    // ✨ 2. เพิ่ม useEffect เพื่อตรวจสอบ Token
+    useEffect(() => {
+        const token = localStorage.getItem('auth_token');
+        // ถ้ามี Token อยู่ในเครื่อง (แสดงว่าล็อกอินแล้ว)
+        if (token) {
+            // ให้ส่งไปที่หน้า Dashboard ทันที
+            navigate('/dashboard');
+        }
+    }, [navigate]); // ให้ Effect นี้ทำงานแค่ครั้งเดียวตอนโหลดหน้า
 
     // ✨ 4. เปลี่ยน handleSubmit ให้เป็น async function เพื่อรอผลลัพธ์จาก API
     const handleSubmit = async (event) => {
@@ -33,7 +43,7 @@ function Login() {
 
             // ถ้าสำเร็จ: เก็บ Token และเปลี่ยนหน้าไปที่ Dashboard
             console.log('เข้าสู่ระบบสำเร็จ:', data);
-            localStorage.setItem('auth_token', data.token);
+            sessionStorage.setItem('auth_token', data.token);
             navigate('/dashboard');
 
         } catch (err) {

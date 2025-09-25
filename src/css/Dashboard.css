@@ -98,8 +98,9 @@ body {
 /* === Analytics Grid Section (จากดีไซน์ Analytics) === */
 .analytics-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr); /* 2 columns layout */
-    gap: 2rem;
+    /* ✨ แบ่งเป็น 2 คอลัมน์เท่าๆ กัน ✨ */
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 1.5rem; /* ระยะห่างระหว่างการ์ด */
 }
 
 .card {
@@ -196,7 +197,8 @@ body {
 /* === Recent Activity Table Styling === */
 
 .recent-activity-card {
-    padding: 0; /* เอา padding ของการ์ดหลักออก เพื่อให้ตารางชิดขอบ */
+    /* ✨ สั่งให้การ์ดนี้กินพื้นที่ทั้ง 2 คอลัมน์ ✨ */
+    grid-column: 1 / -1; 
 }
 
 .recent-activity-card .card-header {
@@ -262,4 +264,51 @@ table tbody tr:hover {
 .status-pill.added { /* สีเหลือง: เพิ่มใหม่ */
     background-color: #fff8e7;
     color: #ffc107;
+}
+
+/* Wrapper สำหรับตารางอันดับ */
+.ranking-table-wrapper {
+    padding: 0.5rem 0; /* เพิ่ม padding บน-ล่างเล็กน้อย */
+    overflow-y: auto; /* ทำให้ scroll ได้ถ้าข้อมูลเยอะ */
+    max-height: 250px; /* จำกัดความสูง */
+}
+
+.ranking-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.ranking-table tr {
+    border-bottom: 1px solid #f3f4f6; /* เส้นคั่นบางๆ */
+}
+
+.ranking-table td {
+    padding: 0.85rem 0.5rem;
+    vertical-align: middle;
+}
+
+/* สไตล์สำหรับอันดับ (ตัวเลข) */
+.rank-number {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #9ca3af; /* สีเทา */
+    text-align: center;
+    width: 40px; /* กำหนดความกว้าง */
+}
+
+/* สไตล์สำหรับชื่อดารา */
+.rank-name {
+    font-weight: 500;
+    color: #374151;
+}
+
+/* สไตล์สำหรับจำนวนครั้ง */
+.rank-count {
+    font-size: 0.9rem;
+    color: #6b7280;
+    text-align: right;
+}
+
+.rank-count strong {
+    color: #1f2937;
 }

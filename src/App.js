@@ -4,13 +4,11 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 // Import Components ของคุณ
 import Login from './component/Login'; // หน้า Login
-import ProductManagement from './component/ProductManagement'; // หน้าจัดการสินค้า
+import LookManagement from './component/LookManagement'; // หน้าจัดการสินค้า
 import Dashboard from './component/Dashboard';
 import Feedback from './component/Feedback';
-
-// (Optional) Import Global CSS ที่ใช้กับทั้งแอป ถ้ามี
-// import './index.css';
-// import './App.css';
+import ProtectedRoute from './component/ProtectedRoute'; // ✨ เพิ่มบรรทัดนี้เข้าไป
+import AdminSimilarityReport from './component/AdminSimilarityReport';
 
 function App() {
   return (
@@ -19,11 +17,13 @@ function App() {
         {/* Route สำหรับหน้า Login: เมื่อ URL เป็น '/' หรือ '/login' จะแสดง Login Component */}
         <Route path="/" element={<Login />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/products" element={<ProductManagement />} />
+        
+        <Route element={<ProtectedRoute allowedRoles={['admin']} />}>
+        <Route path="/lookmanage" element={<LookManagement />} />
         <Route path="/dashboard" element={<Dashboard/>} />
         <Route path='/feedback' element={<Feedback/>} />
-        {/* หากต้องการเพิ่มหน้า 404 Not Found (ถ้าผู้ใช้พิมพ์ URL ผิด) */}
-        {/* <Route path="*" element={<div>404 Not Found</div>} /> */}
+        <Route path='/similarity' element={<AdminSimilarityReport/>}/>
+        </Route>
       </Routes>
     </Router>
   );

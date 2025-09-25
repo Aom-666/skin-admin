@@ -3,19 +3,20 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import '../css/Dashboard.css';
 
 // --- ส่วนจัดการ Library ---
-import { Chart as ChartJS, ArcElement, Tooltip, Legend, CategoryScale, LinearScale, PointElement, LineElement, Filler } from 'chart.js';
-import { Line, Doughnut } from 'react-chartjs-2';
+// ✨ 1. เพิ่ม BarElement สำหรับกราฟแท่ง
+import { Chart as ChartJS, ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement } from 'chart.js';
+// ✨ 2. เปลี่ยน Line เป็น Bar
+import { Doughnut, Bar } from 'react-chartjs-2';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-    faUserCheck, faDna, faUsers, faCheckCircle, faTimesCircle, faPalette,
-    faChartLine, faChartPie, faHistory, faDownload,
-    faBox, faBolt, faStar, faClock, faPercent
+    faUsers, faPalette, faBoxOpen, faCommentDots, faDna,
+    faHistory, faTrophy
 } from '@fortawesome/free-solid-svg-icons';
 
-// ลงทะเบียน components ที่จำเป็นสำหรับ Chart.js
-ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, PointElement, LineElement, Filler);
+// ✨ 3. ลงทะเบียน BarElement
+ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement);
 
-// --- Component สำหรับการ์ดสถิติ ---
+// --- Component สำหรับการ์ดสถิติ (เหมือนเดิม) ---
 const StatCard = ({ icon, label, value, iconColor, iconBgColor }) => {
     return (
         <div className="stat-card">
@@ -30,84 +31,77 @@ const StatCard = ({ icon, label, value, iconColor, iconBgColor }) => {
     );
 };
 
-// --- Component หลักของหน้า Dashboard ---
+// --- Component หลักของหน้า Dashboard (แก้ไขใหม่) ---
 const Dashboard = () => {
+    const navigate = useNavigate();
+
+    // --- State สำหรับเก็บข้อมูลจาก API ---
+    const [stats, setStats] = useState({ users: 0, cosmetics: 0, looks: 0, feedbacks: 0 });
+    const [skinToneData, setSkinToneData] = useState({ labels: [], datasets: [] });
+    const [celebrityData, setCelebrityData] = useState([]);
     const [history, setHistory] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const [totalPages, setTotalPages] = useState(5);
-    const navigate = useNavigate();
-    
-    // ✨ 1. สร้าง State ใหม่สำหรับเก็บข้อมูลกราฟวงกลม
-    const [doughnutChartData, setDoughnutChartData] = useState({
-        labels: [],
-        datasets: [{
-            data: [],
-            backgroundColor: ['#f1c40f', '#e67e22', '#d35400', '#f39c12', '#bdc3c7'],
-            borderColor: '#ffffff',
-            borderWidth: 4,
-        }],
-    });
+    const [totalPages, setTotalPages] = useState(0);
 
     const handleLogout = (e) => {
-      e.preventDefault();
-      console.log("กำลังออกจากระบบ...");
-      localStorage.removeItem('auth_token');
-      navigate('/login');
+        e.preventDefault();
+        sessionStorage.removeItem('auth_token');
+        navigate('/login');
     }
 
-    const dummyHistoryData = {
-        1: [
-            { id: 1, time: '10:55 น.', activity: 'เปรียบเทียบใบหน้า (User-108)', status: 'matched', operator: 'Admin' },
-            { id: 2, time: '10:52 น.', activity: 'แก้ไขข้อมูลสินค้า #5034', status: 'edited', operator: 'Admin' },
-            { id: 3, time: '10:49 น.', activity: 'เปรียบเทียบใบหน้า (User-301)', status: 'mismatched', operator: 'System' },
-            { id: 4, time: '10:45 น.', activity: "เพิ่มสินค้าใหม่ 'Lipstick #04'", status: 'added', operator: 'Admin' },
-        ],
-        2: [
-            { id: 5, time: '10:40 น.', activity: 'ลบสินค้า #2011', status: 'mismatched', operator: 'Admin' },
-            { id: 6, time: '10:35 น.', activity: 'เปรียบเทียบใบหน้า (User-412)', status: 'matched', operator: 'System' },
-            { id: 7, time: '10:30 น.', activity: 'อัปเดตสต็อกสินค้า', status: 'edited', operator: 'Admin' },
-        ],
-    };
-
+    // --- useEffect สำหรับดึงข้อมูลทั้งหมด ---
     useEffect(() => {
-        setHistory(dummyHistoryData[currentPage] || []);
-    }, [currentPage]);
-
-    // ✨ 2. เพิ่ม useEffect ใหม่สำหรับดึงข้อมูลกราฟโดยเฉพาะ
-    useEffect(() => {
-        const fetchSkinToneData = async () => {
+        const fetchData = async () => {
             try {
-                const response = await fetch('http://localhost:5000/api/skintone-summary');
-                const data = await response.json();
+                // ✨ 4. ใช้ Promise.all เพื่อดึงข้อมูลพร้อมกันทั้งหมด ทำให้เร็วกว่า
+                const [statsRes, skinToneRes, celebrityRes] = await Promise.all([
+                    fetch('http://localhost:5000/api/stats/summary'),
+                    fetch('http://localhost:5000/api/skintone-summary'),
+                    fetch('http://localhost:5000/api/popular-celebrities'),
+                ]);
 
-                const labels = data.map(item => item.SkinTone);
-                const counts = data.map(item => item.count);
+                // 1. แปลงข้อมูลสถิติ
+                const statsData = await statsRes.json();
+                setStats(statsData);
 
-                setDoughnutChartData({
-                    labels: labels,
+                // 2. แปลงข้อมูลกราฟสัดส่วนโทนสีผิว
+                const skinToneSummary = await skinToneRes.json();
+                setSkinToneData({
+                    labels: skinToneSummary.map(d => d.SkinTone),
                     datasets: [{
-                        ...doughnutChartData.datasets[0],
-                        data: counts,
+                        data: skinToneSummary.map(d => d.count),
+                        backgroundColor: ['#ffc107', '#fd7e14', '#dc3545', '#6f42c1', '#20c997'],
+                        borderColor: '#ffffff', borderWidth: 4,
                     }],
                 });
+
+                // ✨ เปลี่ยนจากโค้ดเดิมทั้งหมด มาเป็นบรรทัดนี้ ✨
+                const popularCelebrities = await celebrityRes.json();
+                setCelebrityData(popularCelebrities);
+
             } catch (error) {
-                console.error("เกิดข้อผิดพลาดในการดึงข้อมูลสัดส่วนโทนสีผิว:", error);
+                console.error("เกิดข้อผิดพลาดในการดึงข้อมูล Dashboard:", error);
             }
         };
 
-        fetchSkinToneData();
-    }, []); // `[]` ทำให้ทำงานแค่ครั้งเดียวตอนโหลดหน้า
+        const fetchHistory = async () => {
+            try {
+                // 4. ดึงข้อมูลกิจกรรมล่าสุด (แยกออกมาเพื่อให้ pagination ทำงานได้)
+                const activityRes = await fetch(`http://localhost:5000/api/activity-log?page=${currentPage}&limit=4`);
+                const activityData = await activityRes.json();
+                setHistory(activityData.logs);
+                setTotalPages(activityData.totalPages);
+            } catch (error) {
+                console.error("Failed to fetch activity log:", error);
+            }
+        };
 
-    // Data for Charts (ข้อมูลกราฟยังคงเดิม)
-    const lineChartData = {
-        labels: ['จันทร์', 'อังคาร', 'พุธ', 'พฤหัสบดี', 'ศุกร์', 'เสาร์', 'อาทิตย์'],
-        datasets: [
-            { label: 'Warm Ivory', data: [120, 150, 130, 180, 210, 240, 220], borderColor: '#3498db', backgroundColor: 'rgba(52, 152, 219, 0.1)', fill: true, tension: 0.4 },
-            { label: 'Natural Beige', data: [80, 90, 110, 100, 130, 150, 140], borderColor: '#2ecc71', backgroundColor: 'rgba(46, 204, 113, 0.1)', fill: true, tension: 0.4 },
-        ],
-    };
+        fetchData();
+        fetchHistory();
+    }, [currentPage]); // Re-fetch เฉพาะ activity log เมื่อเปลี่ยนหน้า
 
-    const chartOptions = { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { usePointStyle: true } } } };
+    const chartOptions = { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } };
+    const barChartOptions = { ...chartOptions, indexAxis: 'y' }; // ทำให้เป็นกราฟแท่งแนวนอน
 
     return (
         <div className="cosmetic-dashboard">
@@ -115,8 +109,9 @@ const Dashboard = () => {
                 <div className="logo">Cosmetic Admin Panel</div>
                 <nav className="main-nav">
                     <NavLink to="/dashboard">ภาพรวม</NavLink>
-                    <NavLink to="/products">จัดการสินค้า</NavLink>
+                    <NavLink to="/lookmanage">จัดการลุคการแต่งหน้า</NavLink>
                     <NavLink to="/feedback">ข้อเสนอแนะ</NavLink>
+                    <NavLink to="/similarity">ผลการเทียบใบหน้า</NavLink>
                     <a href="#" onClick={handleLogout}>ออกจากระบบ</a>
                 </nav>
             </header>
@@ -125,76 +120,69 @@ const Dashboard = () => {
                 <section className="card stats-overview-section">
                     <h1 className="content-title">สถิติภาพรวม</h1>
                     <div className="stats-grid">
-                        <StatCard icon={faBox} label="สินค้าทั้งหมด" value="250" iconColor="#D97706" iconBgColor="#FEF3C7" />
-                        <StatCard icon={faUsers} label="ผู้ใช้งานทั้งหมด" value="1,200" iconColor="#4B5563" iconBgColor="#E5E7EB" />
-                        <StatCard icon={faBolt} label="ผู้ใช้งานวันนี้" value="350" iconColor="#6D28D9" iconBgColor="#EDE9FE" />
-                        <StatCard icon={faStar} label="หมวดหมู่ยอดนิยม" value="Makeup" iconColor="#059669" iconBgColor="#D1FAE5" />
-                        <StatCard icon={faClock} label="เวลาใช้งานเฉลี่ย" value="12 min" iconColor="#DB2777" iconBgColor="#FCE7F3" />
-                        <StatCard icon={faPercent} label="อัตราการแปลง" value="5.2%" iconColor="#2563EB" iconBgColor="#DBEAFE" />
+                        {/* ✨ 5. แทนที่ค่า Mockup ด้วย State ✨ */}
+                        <StatCard icon={faBoxOpen} label="สินค้าทั้งหมด" value={(stats.cosmetics || 0).toLocaleString()} iconColor="#D97706" iconBgColor="#FEF3C7" />
+                        <StatCard icon={faUsers} label="ผู้ใช้งานทั้งหมด" value={(stats.users || 0).toLocaleString()} iconColor="#4B5563" iconBgColor="#E5E7EB" />
+                        <StatCard icon={faPalette} label="ลุคการแต่งหน้า" value={(stats.looks || 0).toLocaleString()} iconColor="#059669" iconBgColor="#D1FAE5" />
+                        <StatCard icon={faCommentDots} label="Feedback ทั้งหมด" value={(stats.feedbacks || 0).toLocaleString()} iconColor="#DB2777" iconBgColor="#FCE7F3" />
                     </div>
                 </section>
 
+                {/* ✨ นี่คือส่วนที่แก้ไขทั้งหมด ✨ */}
                 <div className="analytics-grid">
-                    <section className="card face-comparison-card">
-                        <div className="card-header"><h2><FontAwesomeIcon icon={faUserCheck} /> ผลการเปรียบเทียบใบหน้า</h2></div>
-                        <div className="comparison-body">
-                            <div className="face-box"><img src="https://i.pravatar.cc/150?u=person1" alt="Original Face" /><label>ภาพต้นฉบับ</label></div>
-                            <div className="match-score"><span>94.5%</span><p>Match Score</p></div>
-                            <div className="face-box"><img src="https://i.pravatar.cc/150?u=person2" alt="Verified Face" /><label>ภาพที่ตรวจสอบ</label></div>
+
+                    {/* --- คอลัมน์ที่ 1: สัดส่วนโทนสีผิว (เหมือนเดิม) --- */}
+                    <section className="card doughnut-chart-card">
+                        <div className="card-header"><h2><FontAwesomeIcon icon={faDna} /> สัดส่วนโทนสีผิวผู้ใช้</h2></div>
+                        <div className="chart-container">
+                            <Doughnut data={skinToneData} options={{ ...chartOptions, plugins: { legend: { position: 'right' } } }} />
                         </div>
                     </section>
 
-                    <section className="card doughnut-chart-card">
-                        <div className="card-header"><h2><FontAwesomeIcon icon={faChartPie} /> สัดส่วนโทนสีผิว</h2></div>
-                        {/* ✨ 3. แก้ไข `data` ให้ใช้ State ที่เราสร้างขึ้นมา */}
-                        <div className="chart-container"><Doughnut data={doughnutChartData} options={{ ...chartOptions, plugins: { legend: { position: 'right' } } }} /></div>
+                    {/* --- คอลัมน์ที่ 2: เปลี่ยนจากกราฟเป็น "ตารางอันดับ" --- */}
+                    <section className="card">
+                        <div className="card-header"><h2><FontAwesomeIcon icon={faTrophy} /> 5 อันดับดารายอดนิยม</h2></div>
+                        <div className="ranking-table-wrapper">
+                            <table className="ranking-table">
+                                <tbody>
+                                    {celebrityData.map((celeb, index) => (
+                                        <tr key={celeb.celebrityName}>
+                                            <td className="rank-number">{index + 1}</td>
+                                            <td className="rank-name">{celeb.celebrityName}</td>
+                                            <td className="rank-count">
+                                                <strong>{celeb.comparison_count.toLocaleString()}</strong> ครั้ง
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
                     </section>
 
-                    <section className="card line-chart-card">
-                        <div className="card-header"><h2><FontAwesomeIcon icon={faChartLine} /> แนวโน้มโทนสีผิว</h2></div>
-                        <div className="chart-container"><Line data={lineChartData} options={chartOptions} /></div>
-                    </section>
-
+                    {/* --- แถวล่าง: กิจกรรมล่าสุด (ขยายเต็ม) (เหมือนเดิม) --- */}
                     <section className="card recent-activity-card">
                         <div className="card-header"><h2><FontAwesomeIcon icon={faHistory} /> กิจกรรมล่าสุด</h2></div>
                         <div className="activity-table-wrapper">
                             <table>
                                 <thead>
-                                    <tr>
-                                        <th>เวลา</th>
-                                        <th>กิจกรรม</th>
-                                        <th>สถานะ</th>
-                                        <th>ผู้ดำเนินการ</th>
-                                    </tr>
+                                    <tr><th>เวลา</th><th>กิจกรรม</th><th>สถานะ</th><th>ผู้ดำเนินการ</th></tr>
                                 </thead>
                                 <tbody>
-                                    {history.map((event) => (
-                                        <tr key={event.id}>
-                                            <td>{event.time}</td>
-                                            <td>{event.activity}</td>
-                                            <td><span className={`status-pill ${event.status}`}>{event.status === 'matched' ? 'สำเร็จ' : event.status === 'edited' ? 'แก้ไข' : event.status === 'mismatched' ? 'ไม่สำเร็จ' : 'เพิ่มใหม่'}</span></td>
-                                            <td>{event.operator}</td>
+                                    {history.map((log) => (
+                                        <tr key={log.log_id}>
+                                            <td>{new Date(log.timestamp).toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' })} น.</td>
+                                            <td>{log.description}</td>
+                                            <td><span className={`status-pill`}>{log.status}</span></td>
+                                            <td>{log.operator_name}</td>
                                         </tr>
                                     ))}
                                 </tbody>
                             </table>
                         </div>
                         <div className="pagination-controls">
-                            <button
-                                onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
-                                disabled={currentPage === 1}
-                            >
-                                ก่อนหน้า
-                            </button>
-                            <span>
-                                หน้า {currentPage} / {totalPages}
-                            </span>
-                            <button
-                                onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
-                                disabled={currentPage === totalPages}
-                            >
-                                ถัดไป
-                            </button>
+                            <button onClick={() => setCurrentPage(p => Math.max(p - 1, 1))} disabled={currentPage === 1}>ก่อนหน้า</button>
+                            <span>หน้า {currentPage} / {totalPages || 1}</span>
+                            <button onClick={() => setCurrentPage(p => Math.min(p + 1, totalPages))} disabled={currentPage === totalPages || totalPages === 0}>ถัดไป</button>
                         </div>
                     </section>
                 </div>

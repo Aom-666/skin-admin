@@ -1,0 +1,170 @@
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap');
+
+/* === โครงสร้างหลักของหน้ารายงานโดยเฉพาะ === */
+body {
+    margin: 0;
+    font-family: 'Kanit', sans-serif;
+    background-color: #f8f9fa;
+    color: #212529;
+}
+
+.similarity-report-page-container {
+    display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100vw !important; /* <<-- เปลี่ยนเป็น 100vw และเพิ่ม !important */
+  margin: 0 !important; /* <<-- เพิ่ม !important */
+  padding: 0 !important;
+}
+
+.similarity-report-header {
+    background-color: #ff99cc; /* เปลี่ยนสีชมพู */
+    color: white;
+    padding: 20px 30px; /* ปรับ Padding */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.similarity-report-logo {
+    margin: 0;
+    font-size: 1.8em; /* ปรับขนาดฟอนต์ */
+    font-weight: 700;
+}
+
+.similarity-report-nav a {
+    color: white;
+    text-decoration: none;
+    margin-left: 25px; /* ปรับระยะห่าง */
+    font-weight: bold; /* ทำให้เป็นตัวหนา */
+    transition: color 0.3s ease;
+}
+
+.similarity-report-nav a.active, 
+.similarity-report-nav a:hover {
+    color: #ffe0f0; /* สีตอน hover/active */
+}
+
+.similarity-report-main-content {
+    padding: 2rem;
+    max-width: 80rem;
+    margin: 0 auto;
+    width: 100%; /* เพิ่มความเสถียรของ layout */
+
+    /* ✨ เพิ่มบรรทัดนี้เพื่อให้เนื้อหาขยายเต็มพื้นที่ที่เหลือ ✨ */
+    flex-grow: 1; 
+}
+
+/* === การ์ดสีขาวสำหรับเนื้อหา === */
+.similarity-report-container {
+    background-color: #fff;
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+}
+
+.similarity-report-card-header {
+    padding: 1.5rem;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.similarity-report-card-header h1 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin: 0;
+}
+
+.similarity-report-card-header p {
+    margin-top: 0.25rem;
+    font-size: 0.875rem;
+    color: #4b5563;
+}
+
+/* === แถบค้นหาและจัดเรียง (ดีไซน์ใหม่) === */
+.similarity-report-controls-bar {
+    padding: 1rem 1.5rem;
+    background-color: #f9fafb;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.similarity-report-control-group {
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+}
+
+.similarity-report-search-input {
+    width: 100%;
+    border: 1px solid #d1d5db;
+    border-radius: 0.5rem;
+    padding: 0.625rem 0.75rem 0.625rem 2.5rem;
+    transition: all 0.2s;
+    box-sizing: border-box;
+    background-color: #fff;
+    font-size: 0.9rem;
+}
+.similarity-report-search-input:focus {
+    outline: none;
+    border-color: #be185d;
+    box-shadow: 0 0 0 3px rgba(219, 39, 119, 0.15);
+}
+.similarity-report-search-icon {
+    position: absolute;
+    left: 0.875rem;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    color: #9ca3af;
+}
+
+.similarity-report-sort-select {
+    width: 100%;
+    border: 1px solid #d1d5db;
+    border-radius: 0.5rem;
+    padding: 0.625rem 2.5rem 0.625rem 0.75rem;
+    transition: all 0.2s;
+    box-sizing: border-box;
+    background-color: #fff;
+    font-size: 0.9rem;
+    cursor: pointer;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 0.5rem center;
+    background-repeat: no-repeat;
+    background-size: 1.5em 1.5em;
+}
+.similarity-report-sort-select:focus {
+    outline: none;
+    border-color: #be185d;
+    box-shadow: 0 0 0 3px rgba(219, 39, 119, 0.15);
+}
+.similarity-report-sort-wrapper {
+    flex-grow: 0;
+    flex-shrink: 0;
+    min-width: 240px;
+}
+
+/* === ตาราง === */
+.table-container { overflow-x: auto; }
+.results-table { width: 100%; border-collapse: collapse; }
+.results-table th, .results-table td { padding: 0.75rem 1.5rem; text-align: left; white-space: nowrap; border-bottom: 1px solid #e5e7eb; }
+.results-table thead { background-color: #f9fafb; }
+.results-table th { font-size: 0.75rem; font-weight: 500; color: #6b7280; text-transform: uppercase; letter-spacing: 0.05em; }
+.results-table tbody tr:hover { background-color: #fdf2f8; }
+.status-text { text-align: center; padding: 2.5rem; color: #6b7280; }
+.progress-bar-container { display: flex; align-items: center; }
+.progress-bar-track { width: 6rem; background-color: #e5e7eb; border-radius: 9999px; height: 0.625rem; margin-right: 0.75rem; overflow: hidden; }
+.progress-bar-fill { background-color: #3b82f6; height: 100%; border-radius: 9999px; }
+
+
+/* ... และส่วนที่เหลือทั้งหมดก็ถูกเปลี่ยนชื่อเช่นกัน ... */
