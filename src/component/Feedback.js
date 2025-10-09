@@ -72,6 +72,7 @@ function Feedback() {
                 <h1>Cosmetic Admin Panel</h1>
                 <nav className="admin-nav">
                     <NavLink to="/dashboard">ภาพรวม</NavLink>
+                    <NavLink to="/product">จัดการสินค้า</NavLink>
                     <NavLink to="/lookmanage">จัดการลุคการแต่งหน้า</NavLink>
                     <NavLink to="/feedback">ข้อเสนอแนะ</NavLink>
                     <NavLink to="/similarity">ผลการเทียบใบหน้า</NavLink>

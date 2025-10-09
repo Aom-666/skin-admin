@@ -488,3 +488,32 @@ table th:nth-child(9), /* สไตล์ที่แนะนำ */
 table td:nth-child(9) {
   min-width: 200px;
 }
+/* --- ✨ เพิ่ม CSS ใหม่สำหรับ Checkbox Group ✨ --- */
+.checkbox-group {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* แบ่งเป็น 2 คอลัมน์ */
+  gap: 10px;
+  background-color: #f9fafb;
+  padding: 1rem;
+  border-radius: 0.375rem;
+  border: 1px solid #d1d5db;
+}
+
+.checkbox-item {
+  display: flex;
+  align-items: center;
+}
+
+.checkbox-item input[type="checkbox"] {
+  margin-right: 8px;
+  transform: scale(1.2);
+  cursor: pointer;
+  accent-color: #be185d; /* (Optional) เปลี่ยนสีตอนติ๊กให้เข้ากับธีม */
+}
+
+.checkbox-item label {
+  margin-bottom: 0;
+  font-weight: normal;
+  color: #333;
+  cursor: pointer;
+}

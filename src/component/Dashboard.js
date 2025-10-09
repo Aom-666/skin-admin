@@ -109,6 +109,7 @@ const Dashboard = () => {
                 <div className="logo">Cosmetic Admin Panel</div>
                 <nav className="main-nav">
                     <NavLink to="/dashboard">ภาพรวม</NavLink>
+                    <NavLink to="/product">จัดการสินค้า</NavLink>
                     <NavLink to="/lookmanage">จัดการลุคการแต่งหน้า</NavLink>
                     <NavLink to="/feedback">ข้อเสนอแนะ</NavLink>
                     <NavLink to="/similarity">ผลการเทียบใบหน้า</NavLink>
