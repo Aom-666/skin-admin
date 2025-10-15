@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react';
 import ProductForm from './ProductForm'; // Import ฟอร์ม
 import '../css/ProductManagement.css'; // ใช้ CSS เดิมของคุณ
 
+const API_BASE_URL = 'http://localhost:5000';
+
 function ProductManagement() {
     const navigate = useNavigate();
     const [products, setProducts] = useState([]);
@@ -16,7 +18,8 @@ function ProductManagement() {
     const fetchProducts = async () => {
         setLoading(true);
         try {
-            const response = await fetch('http://localhost:5000/api/cosmetics');
+            // ใช้ URL เต็มเพื่อความแน่นอน
+            const response = await fetch(`${API_BASE_URL}/api/cosmetics`);
             if (!response.ok) throw new Error('Network response was not ok');
             const data = await response.json();
             setProducts(data);
@@ -27,9 +30,7 @@ function ProductManagement() {
         }
     };
 
-    useEffect(() => {
-        fetchProducts();
-    }, []);
+    useEffect(() => { fetchProducts(); }, []);
 
     const handleLogout = (e) => { e.preventDefault(); sessionStorage.removeItem('auth_token'); navigate('/login'); };
     const handleOpenAddModal = () => { setCurrentProduct(null); setIsModalOpen(true); };
@@ -38,8 +39,8 @@ function ProductManagement() {
 
     const handleSaveProduct = async (productData) => {
         const url = currentProduct
-            ? `http://localhost:5000/api/cosmetics/${currentProduct.CosmeticID}`
-            : 'http://localhost:5000/api/cosmetics';
+            ? `${API_BASE_URL}/api/cosmetics/${currentProduct.CosmeticID}`
+            : `${API_BASE_URL}/api/cosmetics`;
         const method = currentProduct ? 'PUT' : 'POST';
 
         try {
@@ -59,7 +60,7 @@ function ProductManagement() {
     const handleDeleteProduct = async (id) => {
         if (window.confirm('คุณแน่ใจหรือไม่ที่ต้องการลบสินค้านี้?')) {
             try {
-                const response = await fetch(`http://localhost:5000/api/cosmetics/${id}`, { method: 'DELETE' });
+                const response = await fetch(`${API_BASE_URL}/api/cosmetics/${id}`, { method: 'DELETE' });
                 if (!response.ok) throw new Error('Failed to delete product.');
                 fetchProducts();
             } catch (err) {
@@ -94,16 +95,11 @@ function ProductManagement() {
                         {filteredProducts.map(product => (
                             <tr key={product.CosmeticID}>
                                 <td>
-                                    {/* ✨ แก้ไขแท็ก img ที่นี่ ✨ */}
                                     <img
-                                        src={product.ImageURL || placeholderImage}
+                                        src={product.ImageURL ? `${API_BASE_URL}${product.ImageURL}` : placeholderImage}
                                         alt={product.Name}
                                         className="product-thumbnail"
-                                        // onError จะทำงานเมื่อ src โหลดไม่สำเร็จ
-                                        onError={(e) => {
-                                            e.target.onerror = null; // ป้องกันการวนลูป error
-                                            e.target.src = placeholderImage; // เปลี่ยนไปใช้รูปสำรอง
-                                        }}
+                                        onError={(e) => { e.target.onerror = null; e.target.src = placeholderImage; }}
                                     />
                                 </td>
                                 <td>{product.Name}</td>

@@ -142,10 +142,14 @@ table tr:hover {
 }
 
 .product-thumbnail {
-  width: 60px;
-  height: 60px;
-  object-fit: cover;
-  border-radius: 4px;
+  width: 50px;       /* ความกว้างของกรอบ */
+  height: 50px;      /* ความสูงของกรอบ */
+  border-radius: 0.375rem;
+  border: 1px solid #eee;
+
+  /* ✨ เพิ่ม 2 บรรทัดนี้เข้าไป ✨ */
+  object-fit: contain; /* <<-- สั่งให้รูปภาพย่อขนาดลงมาให้พอดีกับกรอบ */
+  background-color: #fff; /* <<-- (Optional) เพิ่มพื้นหลังสีขาวเผื่อรูปมีส่วนโปร่งใส */
 }
 
 .actions button {
