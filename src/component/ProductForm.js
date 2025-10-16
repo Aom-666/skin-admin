@@ -155,7 +155,6 @@ function ProductForm({ product, onClose, onSave }) {
           <div className="form-group"><label>ประเภท (Type)</label><input type="text" name="Type" value={formData.Type} onChange={handleChange} placeholder="เช่น Foundation, Lipstick" required /></div>
           <div className="form-group"><label>ชื่อเฉดสี (Shade Name)</label><input type="text" name="ShadeName" value={formData.ShadeName} onChange={handleChange} /></div>
           <div className="form-group"><label>ราคา (Price)</label><input type="number" name="Price" value={formData.Price} onChange={handleChange} step="0.01" placeholder="เช่น 1800.00" /></div>
-          <div className="form-group"><label>โทนสีผิวที่แนะนำ (Suitable Skin Tone)</label><input type="text" name="suitableSkinTone" value={formData.suitableSkinTone} onChange={handleChange} placeholder="เช่น Warm, Cool, Neutral" /></div>
           
           {/* === ส่วนอัปโหลดรูปภาพ === */}
           <div className="form-group"><label>รูปภาพสินค้า</label><input type="file" accept="image/png, image/jpeg" onChange={handleFileChange} disabled={isUploading} />{isUploading && <p>กำลังอัปโหลด...</p>}{uploadError && <p>{uploadError}</p>}{formData.ImageURL && (<div><img src={`http://localhost:5000${formData.ImageURL}`} alt="Preview" style={{ maxWidth: '100px', maxHeight: '100px' }}/></div>)}</div>

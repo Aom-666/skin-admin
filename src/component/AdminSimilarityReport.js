@@ -110,8 +110,7 @@ const AdminSimilarityReport = () => {
                 <div className="similarity-report-logo">Cosmetic Admin Panel</div>
                 <nav className="similarity-report-nav">
                     <NavLink to="/dashboard">ภาพรวม</NavLink>
-                    <NavLink to="/product">จัดการสินค้า</NavLink>
-                    <NavLink to="/lookmanage">จัดการลุคการแต่งหน้า</NavLink>
+                    <NavLink to="/data-manager">จัดการข้อมูล</NavLink>
                     <NavLink to="/feedback">ข้อเสนอแนะ</NavLink>
                     <NavLink to="/similarity">ผลการเทียบใบหน้า</NavLink>
                     <a href="#" onClick={handleLogout}>ออกจากระบบ</a>

@@ -1,0 +1,120 @@
+/* ✨ 1. ย้าย @import ทั้งหมดมาไว้บนสุดของไฟล์ ✨ */
+@import url('https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap');
+@import url('./ProductManagement.css'); /* <<-- สไตล์หลักของตารางและฟอร์มจะมาจากไฟล์นี้ */
+
+
+/* --- สไตล์สำหรับระบบแท็บ (ไม่มีการเปลี่ยนแปลง) --- */
+.tab-navigation {
+    display: flex;
+    border-bottom: 2px solid #e5e7eb;
+    margin-bottom: 2rem;
+}
+.tab-button {
+    padding: 1rem 1.5rem;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #6b7280;
+    position: relative;
+    transition: color 0.3s ease;
+}
+.tab-button:hover { color: #111827; }
+.tab-button.active { color: #be185d; }
+.tab-button.active::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: #be185d;
+}
+
+/* --- สไตล์กลางสำหรับเนื้อหาในทุกแท็บ --- */
+.management-section {
+    background-color: #fff;
+    padding: 1.5rem;
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.05);
+}
+
+/* --- ✨ 2. สไตล์ใหม่สำหรับ "จัดการแบรนด์" โดยเฉพาะ ✨ --- */
+/* เราจะใช้ #brand-management-tab เพื่อให้มีความเฉพาะเจาะจงสูงสุด */
+
+#brand-management-tab .action-bar {
+    margin-bottom: 1.5rem;
+}
+
+#brand-management-tab .add-form {
+    display: flex;
+    gap: 1rem;
+    flex-grow: 1;
+}
+
+#brand-management-tab .search-input {
+    flex-grow: 1;
+    padding: 0.625rem 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 0.5rem;
+    font-size: 0.9rem;
+}
+#brand-management-tab .search-input:focus {
+    outline: none;
+    border-color: #000000;
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.15);
+}
+
+#brand-management-tab .add-button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1em;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+#brand-management-tab .add-button:hover {
+    background-color: #45a049;
+}
+
+/* สไตล์ตารางสำหรับ "จัดการแบรนด์" เท่านั้น */
+#brand-management-tab table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#brand-management-tab th,
+#brand-management-tab td {
+    border-bottom: 1px solid #e5e7eb;
+    padding: 0.75rem 1rem;
+    text-align: left;
+    vertical-align: middle;
+}
+
+#brand-management-tab thead {
+    background-color: #f9fafb;
+}
+
+#brand-management-tab th {
+    font-weight: 500;
+    color: #6b7280;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+}
+
+#brand-management-tab tbody tr:hover {
+    background-color: #fdf2f8;
+}
+
+/* --- ✨ 3. ย้ายสไตล์สำหรับรูปภาพ (.thumbnail) มาไว้ที่นี่ ✨ --- */
+.thumbnail {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+  border-radius: 4px;
+  background-color: #fff;
+  border: 1px solid #eee;
+}

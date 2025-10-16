@@ -10,6 +10,7 @@ import Feedback from './component/Feedback';
 import ProtectedRoute from './component/ProtectedRoute'; // ✨ เพิ่มบรรทัดนี้เข้าไป
 import AdminSimilarityReport from './component/AdminSimilarityReport';
 import ProductManagement from './component/ProductManagement';
+import DataManager from './component/DataManager';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
         <Route path='/feedback' element={<Feedback/>} />
         <Route path='/similarity' element={<AdminSimilarityReport/>}/>
         <Route path='/product' element={<ProductManagement/>}/>
+        <Route path='/data-manager' element={<DataManager/>}/>
         </Route>
       </Routes>
     </Router>
